@@ -1,14 +1,19 @@
-# Use an OpenJDK base image
-FROM openjdk:17-jdk-slim
-
-# Set the working directory inside the container
+# ----------- Stage 1: Build the JAR ------------
+FROM gradle:8.4-jdk17 AS build
 WORKDIR /app
 
-# Copy the built JAR file from Gradle build directory
-COPY build/libs/research-0.0.1-SNAPSHOT.jar app.jar
+# Copy all source files
+COPY . .
 
-# Expose the application port (optional)
+# Build the application (skip tests to speed up)
+RUN gradle build -x test
+
+# ----------- Stage 2: Run the JAR -------------
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+
+# Copy JAR from the build stage
+COPY --from=build /app/build/libs/research-0.0.1-SNAPSHOT.jar app.jar
+
 EXPOSE 8080
-
-# Run the application
-CMD ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
