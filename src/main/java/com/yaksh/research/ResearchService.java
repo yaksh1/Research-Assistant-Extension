@@ -1,7 +1,6 @@
 package com.yaksh.research;
 
-import org.springframework.stereotype.Service;
+public interface ResearchService {
+    public String processContent(ResearchRequest researchRequest);
 
-@Service
-public class ResearchService {
 }

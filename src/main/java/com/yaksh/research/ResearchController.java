@@ -13,7 +13,7 @@ public class ResearchController {
 
     @PostMapping("/process")
     public ResponseEntity<String> process(@RequestBody ResearchRequest researchRequest){
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(researchService.processContent(researchRequest));
     }
 
 }
