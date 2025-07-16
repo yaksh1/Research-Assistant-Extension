@@ -1,6 +1,7 @@
 package com.yaksh.research;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -8,6 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class ResearchServiceImpl implements ResearchService{
 
     @Value("${gemini.api.url}")
@@ -44,7 +46,6 @@ public class ResearchServiceImpl implements ResearchService{
     }
 
     private String parseResponse(String response) {
-        String result ="";
         try{
             GeminiResponse geminiResponse = objectMapper.readValue(response, GeminiResponse.class);
             if(geminiResponse.getCandidates() == null || geminiResponse.getCandidates().isEmpty()) {
@@ -54,12 +55,14 @@ public class ResearchServiceImpl implements ResearchService{
             if (firstCandidate.getContent() != null &&
                     firstCandidate.getContent().getParts() != null &&
                     !firstCandidate.getContent().getParts().isEmpty()) {
-                result= firstCandidate.getContent().getParts().get(0).getText();
+                String text = firstCandidate.getContent().getParts().get(0).getText();
+                log.info("AI Response: {}", text);
+                return text;
             }
+            return "No response from AI model.";
         }catch (Exception e){
             throw new RuntimeException("Error parsing response: " + e.getMessage());
         }
-        return result;
     }
 
     private String buildPrompt(ResearchRequest request){
