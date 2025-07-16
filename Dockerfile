@@ -5,8 +5,8 @@ WORKDIR /app
 # Copy all source files
 COPY . .
 
-# Build the application (skip tests to speed up)
-RUN gradle build -x test
+# Make wrapper executable and build
+RUN chmod +x ./gradlew && ./gradlew build -x test
 
 # ----------- Stage 2: Run the JAR -------------
 FROM openjdk:17-jdk-slim
