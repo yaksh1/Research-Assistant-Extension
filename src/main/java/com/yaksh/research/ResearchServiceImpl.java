@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ResearchServiceImpl implements ResearchService{
     public String processContent(ResearchRequest researchRequest) {
-        return "";
+        return " ";
     }
 
     private String buildPrompt(ResearchRequest request){
