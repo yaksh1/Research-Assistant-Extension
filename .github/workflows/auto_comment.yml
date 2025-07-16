@@ -1,0 +1,72 @@
+name: Auto-Comment Java Code
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  auto_comment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # Ensure previous commit is available for comparison
+
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+
+      - name: Load Environment Variables
+        run: echo "GITHUB_TOKEN=${{ secrets.AUTO_COMMENT_TOKEN }}" > .env
+
+      - name: Find Modified Java Files
+        id: changed_files
+        run: |
+          if git rev-parse HEAD~1 >/dev/null 2>&1; then
+            PREV_COMMIT=$(git rev-parse HEAD~1)
+          else
+            PREV_COMMIT=$(git rev-list --max-parents=0 HEAD)  # First commit in repo
+          fi
+          LAST_COMMIT=$(git rev-parse HEAD)
+          
+          # Get list of changed Java files
+          CHANGED_FILES=$(git diff --name-only $PREV_COMMIT $LAST_COMMIT -- '*.java')
+          
+          if [[ -z "$CHANGED_FILES" ]]; then
+            echo "No Java files changed."
+            echo "changed_files=" >> $GITHUB_ENV
+          else
+            echo "Modified Java files: $CHANGED_FILES"
+            echo "changed_files=$CHANGED_FILES" >> $GITHUB_ENV
+          fi
+
+      - name: Run Auto Comment Script
+        run: |
+          if [[ -n "${{ env.changed_files }}" ]]; then
+            for file in ${{ env.changed_files }}; do
+              python auto_comment.py "$file"
+            done
+          else
+            echo "No Java files to process."
+          fi
+
+      - name: Commit Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Auto-commented Java files" || echo "No changes to commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.AUTO_COMMENT_TOKEN }}
