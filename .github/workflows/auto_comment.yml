@@ -16,7 +16,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2  # Ensure previous commit is available for comparison
+          fetch-depth: 2  # Ensures previous commit is available for comparison
 
       - name: Set Up Python
         uses: actions/setup-python@v4
@@ -26,11 +26,10 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt
 
-
       - name: Load Environment Variables
         run: echo "GITHUB_TOKEN=${{ secrets.AUTO_COMMENT_TOKEN }}" > .env
 
-      - name: Find Modified Java Files
+      - name: Find Modified Java Files (Exclude Deleted & Test Files)
         id: changed_files
         run: |
           if git rev-parse HEAD~1 >/dev/null 2>&1; then
@@ -39,34 +38,59 @@ jobs:
             PREV_COMMIT=$(git rev-list --max-parents=0 HEAD)  # First commit in repo
           fi
           LAST_COMMIT=$(git rev-parse HEAD)
-          
-          # Get list of changed Java files
-          CHANGED_FILES=$(git diff --name-only $PREV_COMMIT $LAST_COMMIT -- '*.java')
-          
-          if [[ -z "$CHANGED_FILES" ]]; then
-            echo "No Java files changed."
-            echo "changed_files=" >> $GITHUB_ENV
+
+          # Get list of changed Java files (excluding deleted)
+          CHANGED_FILES=$(git diff --name-only --diff-filter=d "$PREV_COMMIT" "$LAST_COMMIT" -- '*.java')
+
+          FILTERED_FILES=""
+          for file in $CHANGED_FILES; do
+            if [[ "$file" =~ [Tt][Ee][Ss][Tt] ]]; then
+              echo "Skipping test file: $file"
+            else
+              FILTERED_FILES+="$file"$'\n'
+            fi
+          done
+
+          if [[ -z "$FILTERED_FILES" ]]; then
+            echo "No valid Java files to process."
+            echo "changed_files=" >> "$GITHUB_ENV"
           else
-            echo "Modified Java files: $CHANGED_FILES"
-            echo "changed_files=$CHANGED_FILES" >> $GITHUB_ENV
+            echo "Modified Java files:"
+            echo "$FILTERED_FILES"
+          
+            # Set environment variable correctly with multiple lines
+            {
+              echo "changed_files<<EOF"
+              echo "$FILTERED_FILES"
+              echo "EOF"
+            } >> "$GITHUB_ENV"
           fi
 
       - name: Run Auto Comment Script
         run: |
           if [[ -n "${{ env.changed_files }}" ]]; then
-            for file in ${{ env.changed_files }}; do
-              python auto_comment.py "$file"
-            done
+            echo "Processing Java files..."
+            while IFS= read -r file; do
+              if [[ -f "$file" ]]; then  # Skip deleted files
+                echo "Processing: $file"
+                python auto_comment.py "$file"
+              else
+                echo "Skipping deleted file: $file"
+              fi
+            done <<< "${{ env.changed_files }}"
           else
             echo "No Java files to process."
           fi
 
-      - name: Commit Changes
+      - name: Commit & Push Changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "Auto-commented Java files" || echo "No changes to commit"
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.AUTO_COMMENT_TOKEN }}
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Auto-commented Java files"
+            git push
+          fi
