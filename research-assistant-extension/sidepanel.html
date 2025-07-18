@@ -9,16 +9,44 @@
         <div class="header">
             <h2>Research Assistant</h2>
             <div class="actions">
+              <div class="summary-style-toggle" id="summaryStyleToggle">
+                <button class="style-btn selected" data-style="short">Short</button>
+                <button class="style-btn" data-style="medium">Medium</button>
+                <button class="style-btn" data-style="detailed">Detailed</button>
+              </div>
+              <div class="cite-toggle-row">
+                <label class="switch">
+                  <input type="checkbox" id="citeToggle" />
+                  <span class="slider"></span>
+                </label>
+                <span class="cite-label">Include Citation</span>
+              </div>
               <button id="SummarizeBtn" class="toggle-button">Summarize</button>
             </div>
 
             <div class="notes">
-              <h3>Research Notes</h3>
-              <textarea id="notes" rows="10" cols="30" placeholder="Type your notes here..."></textarea>
+              <div id="colorPicker" class="color-picker">
+                <button class="color-btn" data-color="#f28b82" style="background:#f28b82"></button>
+                <button class="color-btn" data-color="#fbbc04" style="background:#fbbc04"></button>
+                <button class="color-btn" data-color="#fff475" style="background:#fff475"></button>
+                <button class="color-btn" data-color="#ccff90" style="background:#ccff90"></button>
+                <button class="color-btn" data-color="#a7ffeb" style="background:#a7ffeb"></button>
+                <button class="color-btn" data-color="#cbf0f8" style="background:#cbf0f8"></button>
+                <button class="color-btn" data-color="#aecbfa" style="background:#aecbfa"></button>
+                <button class="color-btn" data-color="#d7aefb" style="background:#d7aefb"></button>
+              </div>
+              <button id="exportNotesBtn" class="toggle-button" style="margin-bottom:10px;">Export Notes</button>
+              <textarea id="notes" rows="4" cols="30" placeholder="Type your notes here..."></textarea>
               <button id="saveNotesBtn" class="toggle-button">Save</button>
+              <div class="summary-history-section">
+                <h3>Summary History</h3>
+                <input type="text" id="summarySearchInput" placeholder="Search summaries..." class="summary-search-input" />
+                <div id="summaryHistoryList" class="summary-history-list"></div>
+              </div>
+              <div id="result"></div>
+              <div id="savedNotesList"></div>
             </div>
         </div>
-        <div id="result"></div>
     </div>
 
     <script src="sidepanel.js"></script>

@@ -58,3 +58,289 @@ button:hover{
   border-radius: 4px;
 }
 
+#result {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  min-height: 32px;
+  font-size: 0.8rem;
+  color: #222;
+  box-shadow: 0 1px 3px rgba(60,72,88,0.04);
+}
+
+.color-picker {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.color-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  transition: border 0.2s;
+}
+.color-btn.selected {
+  border: 3px solid #1a73e8;
+}
+#savedNotesList {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.saved-note {
+  position: relative;
+  padding: 10px;
+  border-radius: 6px;
+  color: #222;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  word-break: break-word;
+}
+
+.summary-style-toggle {
+  display: flex;
+  gap: 8px;
+  background: #f1f3f4;
+  border-radius: 6px;
+  padding: 2px 6px; /* reduce vertical padding */
+  margin-top: 20px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  align-items: center; /* ensures buttons are vertically centered */
+}
+.style-btn {
+  background: none;
+  border: none;
+  color: #1a73e8;
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.style-btn.selected, .style-btn:focus {
+  background: #1a73e8;
+  color: #fff;
+}
+.style-btn:hover:not(.selected) {
+  background: #e3eafc;
+}
+.saved-note {
+  position: relative;
+}
+.note-actions {
+  display: flex;
+  gap: 8px;
+  position: absolute;
+  top: 2px;
+  right: 6px;
+  opacity: 0;
+  transition: opacity 0.18s;
+  z-index: 2;
+}
+.saved-note:hover .note-actions {
+  opacity: 1;
+}
+.note-action-btn {
+  background: #fff;
+  border: 1.5px solid #1a73e8;
+  color: #1a73e8;
+  border-radius: 6px;
+  padding: 3px 12px;
+  font-size: 1.05em;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(26,115,232,0.10);
+  transition: background 0.15s, color 0.15s, border 0.15s, box-shadow 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.note-action-btn:hover {
+  background: #1a73e8;
+  color: #fff;
+  border: 1.5px solid #155ab6;
+  box-shadow: 0 4px 16px rgba(26,115,232,0.18);
+}
+.note-action-btn[title='Delete']:hover {
+  background: #e53935;
+  color: #fff;
+  border: 1.5px solid #b71c1c;
+  box-shadow: 0 4px 16px rgba(229,57,53,0.18);
+}
+.edit-note-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.edit-note-textarea {
+  width: 100%;
+  min-height: 48px;
+  border-radius: 5px;
+  border: 1.5px solid #e3e8ee;
+  padding: 7px 10px;
+  font-size: 1em;
+  resize: vertical;
+  background: #f8fafc;
+}
+.edit-note-textarea:focus {
+  border: 1.5px solid #1a73e8;
+  background: #fff;
+}
+.edit-note-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.edit-color-picker {
+  display: flex;
+  gap: 6px;
+}
+.edit-color-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  transition: border 0.18s;
+}
+.edit-color-btn.selected {
+  border: 2.5px solid #1a73e8;
+}
+.edit-note-save-btn, .edit-note-cancel-btn {
+  background: #1a73e8;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-size: 0.98em;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.edit-note-save-btn:hover {
+  background: #155ab6;
+}
+.edit-note-cancel-btn {
+  background: #e3e8ee;
+  color: #333;
+}
+.edit-note-cancel-btn:hover {
+  background: #d1dbe8;
+}
+.cite-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0 0 0;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 22px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #e3e8ee;
+  border-radius: 22px;
+  transition: background 0.2s;
+}
+.slider:before {
+  position: absolute;
+  content: '';
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(60,72,88,0.10);
+  transition: transform 0.2s;
+}
+.switch input:checked + .slider {
+  background-color: #1a73e8;
+}
+.switch input:checked + .slider:before {
+  transform: translateX(16px);
+}
+.cite-label {
+  font-size: 1rem;
+  color: #333;
+  font-weight: 500;
+  user-select: none;
+}
+.summary-history-section {
+  margin: 18px 0 10px 0;
+  padding: 12px 10px 10px 10px;
+  background: #f7f9fa;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(60,72,88,0.06);
+}
+.summary-history-section h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.05rem;
+  color: #1a73e8;
+  font-weight: 600;
+}
+.summary-search-input {
+  width: 100%;
+  padding: 7px 12px;
+  border: 1.5px solid #e3e8ee;
+  border-radius: 5px;
+  font-size: 1em;
+  margin-bottom: 10px;
+  background: #fff;
+  transition: border 0.18s;
+}
+.summary-search-input:focus {
+  border: 1.5px solid #1a73e8;
+}
+.summary-history-list {
+  max-height: 180px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.summary-history-item {
+  background: #fff;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 0.98em;
+  color: #333;
+  box-shadow: 0 1px 3px rgba(60,72,88,0.06);
+  border-left: 4px solid #1a73e8;
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s;
+  word-break: break-word;
+}
+.summary-history-item:hover {
+  background: #e3eafc;
+  box-shadow: 0 2px 8px rgba(26,115,232,0.10);
+}
+.summary-history-item-title {
+  font-weight: 600;
+  color: #1a73e8;
+  font-size: 0.97em;
+  margin-bottom: 2px;
+}
+.summary-history-item-date {
+  color: #888;
+  font-size: 0.92em;
+  margin-left: 6px;
+}
+
