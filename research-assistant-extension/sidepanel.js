@@ -88,6 +88,14 @@ document.addEventListener('DOMContentLoaded', () => {
           `
           form.appendChild(citeDiv)
         }
+        // Show tags if present
+        if (note.tags && note.tags.length > 0) {
+          const tagsDiv = document.createElement('div')
+          tagsDiv.className = 'note-tags'
+          tagsDiv.style.margin = '6px 0 0 0'
+          tagsDiv.innerHTML = note.tags.map(tag => `<span class="note-tag">${tag}</span>`).join(' ')
+          form.appendChild(tagsDiv)
+        }
         // Actions
         const actions = document.createElement('div')
         actions.className = 'edit-note-actions'
@@ -154,6 +162,14 @@ document.addEventListener('DOMContentLoaded', () => {
           `
           div.appendChild(citeDiv)
         }
+        // Show tags if present
+        if (note.tags && note.tags.length > 0) {
+          const tagsDiv = document.createElement('div')
+          tagsDiv.className = 'note-tags'
+          tagsDiv.style.margin = '6px 0 0 0'
+          tagsDiv.innerHTML = note.tags.map(tag => `<span class="note-tag">${tag}</span>`).join(' ')
+          div.appendChild(tagsDiv)
+        }
         // Actions (edit/delete/history)
         const actions = document.createElement('div')
         actions.className = 'note-actions'
@@ -219,6 +235,21 @@ document.addEventListener('DOMContentLoaded', () => {
         sourceTitle: tab.title,
         accessDate: new Date().toISOString().slice(0, 10)
       }
+    }
+    // Call backend to classify topics
+    try {
+      const resp = await fetch('https://ai-summarizer-0d4c.onrender.com/api/research/classify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content })
+      })
+      if (resp.ok) {
+        noteObj.tags = await resp.json()
+      } else {
+        noteObj.tags = []
+      }
+    } catch (e) {
+      noteObj.tags = []
     }
     notes.unshift(noteObj)
     saveNotesArr(notes)

@@ -80,4 +80,11 @@ public class ResearchServiceImpl implements ResearchService{
         prompt.append(request.getContent());
         return prompt.toString();
     }
+
+    @Override
+    public java.util.List<String> classifyTopics(String content) {
+        // TODO: Call Gemini/OpenAI for topic classification
+        // For now, return a static list for demo
+        return java.util.List.of("Science", "Technology");
+    }
 }

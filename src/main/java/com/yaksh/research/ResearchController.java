@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/research")
 @CrossOrigin(origins = "*") // allow all apis to be accessed from frontend
@@ -16,4 +18,9 @@ public class ResearchController {
         return ResponseEntity.ok(researchService.processContent(researchRequest));
     }
 
+    @PostMapping("/classify")
+    public ResponseEntity<List<String>> classify(@RequestBody ResearchRequest researchRequest) {
+        List<String> tags = researchService.classifyTopics(researchRequest.getContent());
+        return ResponseEntity.ok(tags);
+    }
 }

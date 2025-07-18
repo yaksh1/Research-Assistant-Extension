@@ -69,6 +69,7 @@ Research Assistant is a Chrome extension that helps users summarize selected tex
 - Topic auto-categorization
 - Clipboard watch mode
 - And more (see `workflow/CONTEXT.md`)
+- ~~Deploy Backend with CI/CD~~ (Completed)
 
 ## Recent Improvements
 - **Note Versioning:** Every time a note is edited, a version with timestamp is saved and can be viewed in a modal.
@@ -78,6 +79,7 @@ Research Assistant is a Chrome extension that helps users summarize selected tex
 - **Summary Length Toggle:** Added a modern toggle for Short/Medium/Detailed summaries, with clear selection and smooth transitions.
 - **Refined Layout:** More compact, visually balanced panel with better padding, alignment, and card-like notes.
 - **Updated Backend URL:** The extension now uses `https://ai-summarizer-0d4c.onrender.com/api/research/process` as the backend endpoint.
+- **Backend CI/CD Deployment:** The backend is now automatically built and deployed using GitHub Actions and Docker to Render.
 
 ## Screenshots
 *(Add screenshots of the extension in action here)*
