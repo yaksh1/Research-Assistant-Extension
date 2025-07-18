@@ -26,5 +26,6 @@ public class GeminiResponse {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Part {
         private String text;
+        private List<String> tags;
     }
 }

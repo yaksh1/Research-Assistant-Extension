@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const citeToggle = document.getElementById('citeToggle')
   let selectedColor = '#f28b82'
   let selectedSummaryStyle = 'medium'
+  const BACKEND_BASE_URL = 'http://localhost:8080';
+  // const BACKEND_BASE_URL = 'https://ai-summarizer-0d4c.onrender.com';
+
 
   // Color picker logic
   colorPicker.addEventListener('click', e => {
@@ -88,14 +91,31 @@ document.addEventListener('DOMContentLoaded', () => {
           `
           form.appendChild(citeDiv)
         }
-        // Show tags if present
-        if (note.tags && note.tags.length > 0) {
-          const tagsDiv = document.createElement('div')
-          tagsDiv.className = 'note-tags'
-          tagsDiv.style.margin = '6px 0 0 0'
-          tagsDiv.innerHTML = note.tags.map(tag => `<span class="note-tag">${tag}</span>`).join(' ')
-          form.appendChild(tagsDiv)
+        // Show tags with delete/add in edit mode
+        let tags = Array.isArray(note.tags) ? [...note.tags] : []
+        const tagDiv = document.createElement('div');
+        form.appendChild(tagDiv);
+
+        function updateTags(newTags) {
+          tags = newTags;
+          notes[idx].tags = tags;
+          saveNotesArr(notes);
+          // Clear and re-render tags in tagDiv
+          tagDiv.innerHTML = '';
+          tagDiv.appendChild(renderTags(tags, onDelete, onAdd));
         }
+        function onDelete(tagIdx) {
+          const newTags = tags.slice();
+          newTags.splice(tagIdx, 1);
+          updateTags(newTags);
+        }
+        function onAdd(newTag) {
+          if (!tags.includes(newTag)) {
+            updateTags([...tags, newTag]);
+          }
+        }
+        // Initial render
+        tagDiv.appendChild(renderTags(tags, onDelete, onAdd));
         // Actions
         const actions = document.createElement('div')
         actions.className = 'edit-note-actions'
@@ -117,10 +137,15 @@ document.addEventListener('DOMContentLoaded', () => {
           // Only keep last 10 versions
           if (note.versions.length > 10) note.versions.length = 10
           // Preserve citation if present
-          const updatedNote = { text: newText, color: selectedEditColor }
-          if (note.citation) updatedNote.citation = note.citation
-          updatedNote.versions = note.versions
-          notes[idx] = updatedNote
+          const updatedNote = {
+          text: newText,
+          color: selectedEditColor,
+          tags: tags // ✅ preserve tags
+        }
+        if (note.citation) updatedNote.citation = note.citation
+        updatedNote.versions = note.versions
+        notes[idx] = updatedNote
+
           saveNotesArr(notes)
           window.editingNoteIdx = null
           renderNotes()
@@ -162,12 +187,9 @@ document.addEventListener('DOMContentLoaded', () => {
           `
           div.appendChild(citeDiv)
         }
-        // Show tags if present
+        // Show tags (read-only, no delete/add)
         if (note.tags && note.tags.length > 0) {
-          const tagsDiv = document.createElement('div')
-          tagsDiv.className = 'note-tags'
-          tagsDiv.style.margin = '6px 0 0 0'
-          tagsDiv.innerHTML = note.tags.map(tag => `<span class="note-tag">${tag}</span>`).join(' ')
+          const tagsDiv = renderTags(note.tags)
           div.appendChild(tagsDiv)
         }
         // Actions (edit/delete/history)
@@ -221,33 +243,98 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   }
   window.editingNoteIdx = null
+  /* ---------- Helper Utilities ---------- */
+  const getCitationFields = async () => {
+    if (!citeToggle.checked) return {}
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
+    return {
+      sourceUrl: tab.url,
+      sourceTitle: tab.title,
+      accessDate: new Date().toISOString().slice(0, 10)
+    }
+  }
+
+  const apiProcess = async ({ content, summaryStyle, extraFields = {} }) => {
+    const payload = {
+      content,
+      operation: 'summarize',
+      summaryStyle,
+      ...extraFields
+    }
+    const resp = await fetch(`${BACKEND_BASE_URL}/api/research/process`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    if (!resp.ok) throw new Error('Backend error')
+    try {
+      return await resp.json()
+    } catch {
+      // Fallback to plain text if backend returns raw text
+      return { text: await resp.text() }
+    }
+  }
+  // Helper to render tags (optionally with delete/add for edit mode)
+  function renderTags(tags, onDelete, onAdd) {
+    const tagsDiv = document.createElement('div')
+    tagsDiv.className = 'note-tags'
+    tagsDiv.style.margin = '6px 0 0 0'
+    tags.forEach((tag, i) => {
+      const tagSpan = document.createElement('span')
+      tagSpan.className = 'note-tag'
+      tagSpan.textContent = tag
+      // Only add delete button if onDelete is provided (edit mode)
+      if (onDelete) {
+        const delBtn = document.createElement('button')
+        delBtn.textContent = 'x'
+        delBtn.className = 'tag-delete-btn'
+        delBtn.title = 'Delete tag'
+        delBtn.onclick = e => {
+          e.stopPropagation()
+          onDelete(i)
+        }
+        tagSpan.appendChild(delBtn)
+      }
+      tagsDiv.appendChild(tagSpan)
+    })
+    // Add new tag input only if onAdd is provided (edit mode)
+    if (onAdd) {
+      const addInput = document.createElement('input')
+      addInput.type = 'text'
+      addInput.placeholder = 'Add tag'
+      addInput.className = 'tag-add-input'
+      addInput.onkeydown = e => {
+        if (e.key === 'Enter' && addInput.value.trim()) {
+          onAdd(addInput.value.trim())
+          addInput.value = ''
+        }
+      }
+      tagsDiv.appendChild(addInput)
+    }
+    return tagsDiv
+  }
   // Save note
   saveBtn.addEventListener('click', async () => {
     const content = notesArea.value.trim()
     if (!content) return
     const notes = getNotes()
     let noteObj = { text: content, color: selectedColor }
+    let citeFields = {}
     if (citeToggle.checked) {
       // Get citation info from current tab
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
-      noteObj.citation = {
+      citeFields = {
         sourceUrl: tab.url,
         sourceTitle: tab.title,
         accessDate: new Date().toISOString().slice(0, 10)
       }
+      noteObj.citation = { ...citeFields }
     }
-    // Call backend to classify topics
+    // Call backend to process note and get tags/summary
     try {
-      const resp = await fetch('https://ai-summarizer-0d4c.onrender.com/api/research/classify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content })
-      })
-      if (resp.ok) {
-        noteObj.tags = await resp.json()
-      } else {
-        noteObj.tags = []
-      }
+      const resp = await apiProcess({ content, summaryStyle: selectedSummaryStyle, extraFields: citeFields })
+      if (resp.tags) noteObj.tags = resp.tags
+      // Optionally, you could use result.text as a summary for the note if desired
     } catch (e) {
       noteObj.tags = []
     }
@@ -255,7 +342,12 @@ document.addEventListener('DOMContentLoaded', () => {
     saveNotesArr(notes)
     notesArea.value = ''
     renderNotes()
+    // No tag edit modal after saving
   })
+
+  function showTagEditForLastNote() {
+    // (No longer used, so remove or leave empty)
+  }
   renderNotes()
 
   // Load saved notes
@@ -342,27 +434,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           }
 
-          const response = await fetch(
-            'https://ai-summarizer-0d4c.onrender.com/api/research/process',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                content: selectedText,
-                operation: 'summarize',
-                summaryStyle: selectedSummaryStyle,
-                cite: !!citeToggle.checked,
-                ...citationFields
-              })
-            }
-          )
+          const resp = await apiProcess({
+            content: selectedText,
+            summaryStyle: selectedSummaryStyle,
+            extraFields: citationFields
+          })
 
-          if (!response.ok) throw new Error('Failed to summarize')
-
-          const summary = await response.text()
-          resultDiv.textContent = summary
+          let summary = ''
+          let tags = []
+          if (resp.text) {
+            summary = resp.text
+            tags = resp.tags || []
+          }
+          resultDiv.innerHTML = `<div>${summary}</div>`
+          if (tags.length > 0) {
+            const tagsDiv = renderTags(tags)
+            resultDiv.appendChild(tagsDiv)
+          }
           // Save to summary history
           addSummaryToHistory(summary, tab.url, tab.title)
           renderSummaryHistory(document.getElementById('summarySearchInput').value)
