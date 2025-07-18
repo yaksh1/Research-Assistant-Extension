@@ -63,26 +63,7 @@ Research Assistant is a Chrome extension that helps users summarize selected tex
 - [x] Summarize selected text using AI backend
 - [x] Write, save, and display personal notes
 - [x] Notes stored and loaded from localStorage
-- [x] Topic Organizer (Auto Categorize Notes) ✅ DONE
-
-**Status:** Implemented. Each note is now auto-tagged with categories using Gemini/OpenAI, and tags are stored in MongoDB.
-
-## Planned/Upcoming Features
-- Summary history & search
-- Topic auto-categorization
-- Clipboard watch mode
-- And more (see `workflow/CONTEXT.md`)
-- ~~Deploy Backend with CI/CD~~ (Completed)
-
-## Recent Improvements
-- **Note Versioning:** Every time a note is edited, a version with timestamp is saved and can be viewed in a modal.
-- **Summary History & Search:** The last 30 summaries are now saved and searchable by keyword. Summaries can be copied to clipboard with a click.
-- **Citation Display:** Citation info (URL and access date) is now shown with notes in a visually appealing way.
-- **Modernized UI:** Improved spacing, proportions, and visual polish for a more elegant, user-friendly experience.
-- **Summary Length Toggle:** Added a modern toggle for Short/Medium/Detailed summaries, with clear selection and smooth transitions.
-- **Refined Layout:** More compact, visually balanced panel with better padding, alignment, and card-like notes.
-- **Updated Backend URL:** The extension now uses `https://ai-summarizer-0d4c.onrender.com/api/research/process` as the backend endpoint.
-- **Backend CI/CD Deployment:** The backend is now automatically built and deployed using GitHub Actions and Docker to Render.
+- [x] Topic Organizer (Auto Categorize Notes)
 
 ## Screenshots
 *(Add screenshots of the extension in action here)*
