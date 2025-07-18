@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 @Service
 @Slf4j
@@ -21,9 +19,6 @@ public class ResearchServiceImpl implements ResearchService{
 
     private final WebClient webClient;
     private final ObjectMapper objectMapper;
-
-    // In-memory token store for demo (keyed by 'demoUser')
-    private final ConcurrentMap<String, String> userTokens = new ConcurrentHashMap<>();
 
     public ResearchServiceImpl(WebClient.Builder webclientBuilder) {
         this.webClient = webclientBuilder.build();
@@ -74,7 +69,7 @@ public class ResearchServiceImpl implements ResearchService{
         StringBuilder prompt = new StringBuilder();
         switch(request.getOperation()){
             case "summarize":
-                prompt.append("Provide a clear and concise summary of the following text:\n\n" + "and follow a" + request.getSummaryStyle() + " style.\n\n");
+                prompt.append("Provide a clear and concise summary of the following text:\n\n");
                 break;
             case "suggest":
                 prompt.append("Based on the following content: suggest related topics and further reading. Format the response with clear headings and bullet points:\n\n");
@@ -84,23 +79,5 @@ public class ResearchServiceImpl implements ResearchService{
         }
         prompt.append(request.getContent());
         return prompt.toString();
-    }
-
-    @Override
-    public String exchangeCodeForTokens(String code) {
-        // TODO: Exchange code for tokens using Google OAuth2 API
-        // For now, just store the code as a placeholder
-        userTokens.put("demoUser", code);
-        return "Token exchange not implemented. Code stored for demo.";
-    }
-
-    @Override
-    public String exportNoteToGoogleDoc(ResearchRequest researchRequest) {
-        // TODO: Use stored token to call Google Docs API and create a document
-        String token = userTokens.get("demoUser");
-        if (token == null) {
-            return "No token found. Please authenticate with Google first.";
-        }
-        return "Export to Google Docs not yet implemented. Token: " + token;
     }
 }
