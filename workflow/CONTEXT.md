@@ -56,10 +56,12 @@ Show the last 30 summaries and allow filtering by keyword or page.
 
 ---
 
-## 5. Topic Organizer (Auto Categorize Notes)
+## 5. Topic Organizer (Auto Categorize Notes) ✅ DONE
 
 **📝 Description**
 Auto-tag each note with categories like "Science", "History", etc., using Gemini/OpenAI.
+
+**Status:** Implemented. Each note is now auto-tagged with categories using Gemini/OpenAI, and tags are stored in MongoDB.
 
 **🎯 Why It’s Valuable**
 Helps manage research content by theme.

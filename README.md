@@ -63,6 +63,9 @@ Research Assistant is a Chrome extension that helps users summarize selected tex
 - [x] Summarize selected text using AI backend
 - [x] Write, save, and display personal notes
 - [x] Notes stored and loaded from localStorage
+- [x] Topic Organizer (Auto Categorize Notes) ✅ DONE
+
+**Status:** Implemented. Each note is now auto-tagged with categories using Gemini/OpenAI, and tags are stored in MongoDB.
 
 ## Planned/Upcoming Features
 - Summary history & search

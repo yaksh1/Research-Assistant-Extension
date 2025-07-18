@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const citeToggle = document.getElementById('citeToggle')
   let selectedColor = '#f28b82'
   let selectedSummaryStyle = 'medium'
-  const BACKEND_BASE_URL = 'http://localhost:8080';
-  // const BACKEND_BASE_URL = 'https://ai-summarizer-0d4c.onrender.com';
+  // const BACKEND_BASE_URL = 'http://localhost:8080';
+  const BACKEND_BASE_URL = 'https://ai-summarizer-0d4c.onrender.com';
 
 
   // Color picker logic
