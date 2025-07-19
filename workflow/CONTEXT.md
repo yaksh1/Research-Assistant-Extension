@@ -73,10 +73,12 @@ Helps manage research content by theme.
 
 ---
 
-## 6. Clipboard Watch Mode
+## 6. Clipboard Watch Mode (In Progress)
 
 **📝 Description**
-Detect if a user copies large text and offer to summarize it via popup.
+When a user selects text on any webpage, a floating 'Summarize this?' button appears near the selection (like Grammarly). On click, the selected text is sent to the backend for summarization and the result is shown in the extension panel or popup.
+
+**Status:** In Progress. Content script now injects a floating button on selection; integration with backend and UI display is next.
 
 **🎯 Why It’s Valuable**
 Streamlines summarization experience.
