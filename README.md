@@ -1,5 +1,7 @@
 # Research Assistant Chrome Extension
 
+[**Landing Page**](https://lexi-wasmer-app-deployments.wasmer.app/)
+
 ## Overview
 Research Assistant is a Chrome extension that helps users summarize selected text from any webpage using an AI-powered backend, and manage personal research notes with color-coded organization.
 
@@ -66,7 +68,8 @@ Research Assistant is a Chrome extension that helps users summarize selected tex
 - [x] Topic Organizer (Auto Categorize Notes)
 
 ## Screenshots
-*(Add screenshots of the extension in action here)*
+
+![Promo Screenshot](images/promo.png)
 
 ## License
 MIT
