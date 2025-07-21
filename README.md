@@ -3,7 +3,7 @@
 [**Landing Page**](https://lexi-wasmer-app-deployments.wasmer.app/)
 
 ## Overview
-Research Assistant is a Chrome extension that helps users summarize selected text from any webpage using an AI-powered backend, and manage personal research notes with color-coded organization.
+Lexi is a Chrome extension that helps users summarize selected text from any webpage using an AI-powered backend, and manage personal research notes with color-coded organization.
 
 ## Features
 - **Summarize Selected Text:** Select any text on a webpage and click "Summarize" to get an AI-generated summary via a Spring Boot backend (Gemini/OpenAI powered).
