@@ -1,6 +1,6 @@
 # Research Assistant Chrome Extension
 
-[**Landing Page**](https://lexi-wasmer-app-deployments.wasmer.app/)
+[**Landing Page**](https://lexi-yakshdipteshgandhi.wasmer.app/)
 
 ## Overview
 Lexi is a Chrome extension that helps users summarize selected text from any webpage using an AI-powered backend, and manage personal research notes with color-coded organization.
