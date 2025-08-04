@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEXI - AI-Powered Research Assistant Chrome Extension</title>
+    <link rel="stylesheet" href="lexi_landing_theme_v2.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="icon128.png">
+    
+
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <div class="lexi-logo"></div>
+                LEXI
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+                <li><a href="#benefits" class="nav-link">Benefits</a></li>
+            </ul>
+            <a href="https://chromewebstore.google.com/detail/hmpcdnefhhlffjlbpiakgonjogcfdpec?utm_source=item-share-cb" class="btn btn-primary" target="_blank" rel="noopener">Add to Chrome</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <!-- Left Side - Marketing Content -->
+                <div class="hero-left">
+                    <h1 class="hero-title fade-in">Transform Any Text Into Smart Summaries</h1>
+                    <p class="hero-subtitle slide-up">
+                        LEXI is the AI-powered Chrome extension that instantly summarizes selected text, organizes your notes, and keeps your research perfectly cited and tagged.
+                    </p>
+                    
+                    <div class="cta-buttons">
+                        <a href="https://chromewebstore.google.com/detail/hmpcdnefhhlffjlbpiakgonjogcfdpec?utm_source=item-share-cb" class="btn btn-primary" target="_blank" rel="noopener">
+                            <span style="font-size: 1rem;" role="img" aria-label="chrome">🌐</span>
+                            Add to Chrome - It's Free
+                        </a>
+                        <a href="https://youtu.be/McZlp9-sGTI?si=GCxtXUwgH1GwTQFR" class="btn btn-secondary" target="_blank" rel="noopener">
+                            <span style="font-size: 1rem;" role="img" aria-label="play">▶️</span>
+                            See Demo
+                        </a>
+                    </div>
+                    
+                    <div class="social-proof">
+                        <div class="proof-badge">
+                            <span style="font-size: 1rem; color: var(--primary);" role="img" aria-label="shield">🛡️</span>
+                            Privacy First
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Side - Floating Extension Demo -->
+                <div class="floating-animation">
+                    <div class="extension-panel demo-content-1" id="extensionDemo">
+                        <div class="extension-header">
+                            <div class="extension-title">LEXI Extension</div>
+                            <div class="extension-status"></div>
+                        </div>
+                        
+                        <div class="text-input-area">
+                            <div class="selected-text">
+                                <div class="text-highlight"></div>
+                                Artificial intelligence (AI) is intelligence demonstrated by machines, in contrast to the natural intelligence displayed by humans and animals. Leading AI textbooks define the field as the study of intelligent agents: any device that perceives its environment and takes actions that maximize its chance of successfully achieving its goals.
+                            </div>
+                            <div class="text-preview">Selected text will be highlighted</div>
+                        </div>
+                        
+                        <button class="summarize-button" id="summarizeBtn">
+                            <div class="button-glow"></div>
+                            <span style="font-size: 1rem;" role="img" aria-label="sparkles">✨</span>
+                            Summarize Selected Text
+                        </button>
+                        
+                        <div class="results-area" id="resultsArea">
+                            <div class="results-title">AI Summary</div>
+                            <div class="summary-text typing-effect" id="summaryText">
+                                AI refers to machine intelligence that contrasts with natural human and animal intelligence, involving computational systems that can perform tasks typically requiring human cognition.
+                            </div>
+                            <div class="tags-container">
+                                <span class="tag">#AI</span>
+                                <span class="tag">#Technology</span>
+                                <span class="tag">#Machine Learning</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="container" style="padding: 4rem 0;">
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: var(--foreground);">Powerful Features for Smarter Note-Taking</h2>
+        <p style="text-align: center; font-size: 1.2rem; margin-bottom: 3rem; color: var(--muted-foreground);">Discover how LEXI transforms your browsing experience with AI-powered summarization and intelligent organization.</p>
+        
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-icon blue">
+                    <span style="font-size: 1.5rem;" role="img" aria-label="brain">🧠</span>
+                </div>
+                <h3 class="feature-title">AI-Powered Summarization</h3>
+                <p class="feature-description">Select any text on any webpage and get instant, intelligent summaries powered by advanced AI algorithms.</p>
+                <div class="feature-detail">
+                    <span style="font-size: 1rem;" role="img" aria-label="check">✔️</span>
+                    Short, Medium & Detailed options
+                </div>
+            </div>
+            
+            <div class="feature-card fade-in">
+                <div class="feature-icon teal">
+                    <span style="font-size: 1.5rem;" role="img" aria-label="tags">🏷️</span>
+                </div>
+                <h3 class="feature-title">Smart Topic Organization</h3>
+                <p class="feature-description">Automatically categorize and tag your notes with intelligent topic recognition and color-coded organization.</p>
+                <div class="feature-detail">
+                    <span style="font-size: 1rem;" role="img" aria-label="check">✔️</span>
+                    Auto-generated tags & categories
+                </div>
+            </div>
+            
+            <div class="feature-card fade-in">
+                <div class="feature-icon orange">
+                    <span style="font-size: 1.5rem;" role="img" aria-label="quote">❝</span>
+                </div>
+                <h3 class="feature-title">Auto Citations & Sources</h3>
+                <p class="feature-description">Never lose track of your sources. Automatic citation generation with full source attribution for every summary.</p>
+                <div class="feature-detail">
+                    <span style="font-size: 1rem;" role="img" aria-label="check">✔️</span>
+                    Perfect for research & studies
+                </div>
+            </div>
+            
+            <div class="feature-card fade-in">
+                <div class="feature-icon purple">
+                    <span style="font-size: 1.5rem;" role="img" aria-label="clock">⏰</span>
+                </div>
+                <h3 class="feature-title">Summary History & Search</h3>
+                <p class="feature-description">Access your last 30 summaries with powerful keyword search and one-click copy to clipboard functionality.</p>
+                <div class="feature-detail">
+                    <span style="font-size: 1rem;" role="img" aria-label="check">✔️</span>
+                    Quick search & copy features
+                </div>
+            </div>
+            
+            <div class="feature-card fade-in">
+                <div class="feature-icon green">
+                    <span style="font-size: 1.5rem;" role="img" aria-label="git-branch">🌿</span>
+                </div>
+                <h3 class="feature-title">Note Versioning & History</h3>
+                <p class="feature-description">Track changes to your notes with complete version history and timestamp tracking for every edit.</p>
+                <div class="feature-detail">
+                    <span style="font-size: 1rem;" role="img" aria-label="check">✔️</span>
+                    Full version control
+                </div>
+            </div>
+            
+            <div class="feature-card fade-in">
+                <div class="feature-icon pink">
+                    <span style="font-size: 1.5rem;" role="img" aria-label="file-text">📄</span>
+                </div>
+                <h3 class="feature-title">Personal Notes & Storage</h3>
+                <p class="feature-description">Write and save personal notes alongside AI summaries, stored securely in your browser's local storage.</p>
+                <div class="feature-detail">
+                    <span style="font-size: 1rem;" role="img" aria-label="check">✔️</span>
+                    Local storage & security
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="container">
+        <div class="benefits-section">
+            <div class="benefits-content">
+                <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--foreground);">Why Researchers & Students Love LEXI</h2>
+                
+                <div class="benefit-item slide-up">
+                    <div class="benefit-icon green">
+                        <span style="font-size: 1.5rem;" role="img" aria-label="clock">⏰</span>
+                    </div>
+                    <div class="benefit-content">
+                        <h3>Save 75% of Research Time</h3>
+                        <p>Instantly summarize long articles, papers, and documents without losing important context or citations.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-item slide-up">
+                    <div class="benefit-icon blue">
+                        <span style="font-size: 1.5rem;" role="img" aria-label="brain">🧠</span>
+                    </div>
+                    <div class="benefit-content">
+                        <h3>Never Lose Important Information</h3>
+                        <p>Automatic tagging and categorization ensures you can always find what you're looking for, when you need it.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-item slide-up">
+                    <div class="benefit-icon teal">
+                        <span style="font-size: 1.5rem;" role="img" aria-label="shield">🛡️</span>
+                    </div>
+                    <div class="benefit-content">
+                       <h3>privacy-First Approach</h3>
+                       <p>Your notes and summaries are stored locally in your browser. No cloud storage, no data tracking, complete privacy.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-item slide-up">
+                    <div class="benefit-icon orange">
+                        <span style="font-size: 1.5rem;" role="img" aria-label="graduation-cap">🎓</span>
+                    </div>
+                    <div class="benefit-content">
+                        <h3>Perfect for Academic Work</h3>
+                        <p>Built-in citation generation and source tracking makes LEXI ideal for students, researchers, and academics.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="workspace-image fade-in">
+                <!-- Workspace image from Unsplash -->
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="container">
+        <div class="how-it-works">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--foreground);">How LEXI Works</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 3rem; color: var(--muted-foreground);">Get started in seconds with our simple 3-step process.</p>
+            
+            <div class="steps-grid">
+                <div class="step-item slide-up">
+                    <div class="step-number">1</div>
+                    <div class="step-image step-1"></div>
+                    <h3 style="margin: 1rem 0 0.5rem 0; color: var(--foreground);">Select Text</h3>
+                    <p style="color: var(--muted-foreground); margin: 0;">Highlight any text on any webpage you want to summarize or save for later reference.</p>
+                </div>
+                
+                <div class="step-item slide-up">
+                    <div class="step-number">2</div>
+                    <div class="step-image step-2"></div>
+                    <h3 style="margin: 1rem 0 0.5rem 0; color: var(--foreground);">Click Summarize</h3>
+                    <p style="color: var(--muted-foreground); margin: 0;">Click the LEXI button and watch as AI instantly creates a smart summary with auto-generated tags.</p>
+                </div>
+                
+                <div class="step-item slide-up">
+                    <div class="step-number">3</div>
+                    <div class="step-image step-3"></div>
+                    <h3 style="margin: 1rem 0 0.5rem 0; color: var(--foreground);">Save & Organize</h3>
+                    <p style="color: var(--muted-foreground); margin: 0;">Your summary is automatically saved with citations, tags, and organized in your personal knowledge base.</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 3rem; text-align: center;">
+                <a href="https://chromewebstore.google.com/detail/hmpcdnefhhlffjlbpiakgonjogcfdpec?utm_source=item-share-cb" class="btn btn-primary" target="_blank" rel="noopener" style="font-size: 1.2rem; padding: 1.2rem 2.5rem;">
+                    <span style="font-size: 1.2rem;" role="img" aria-label="lock">🔒</span>
+                    Try LEXI Now - Free Installation
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Section -->
+    <section id="download" class="installation-section">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Ready to Transform Your Research?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 3rem;">Join thousands of users who are already summarizing smarter with LEXI.</p>
+            
+            <div class="installation-card fade-in">
+                <h3 style="margin-bottom: 2rem; font-size: 1.5rem;">Easy Installation Process</h3>
+                
+                <div class="installation-steps">
+                    <div class="installation-step">
+                        <div class="installation-step-number">1</div>
+                        <p>Click the button below to go to LEXI's official page</p>
+                    </div>
+                    
+                    <div class="installation-step">
+                        <div class="installation-step-number">2</div>
+                        <p>Click "Add to Chrome" and confirm installation</p>
+                    </div>
+                    
+                    <div class="installation-step">
+                        <div class="installation-step-number">3</div>
+                        <p>Select text on any page and click the LEXI icon</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cta-buttons" style="margin-top: 2rem;">
+                <a href="https://chromewebstore.google.com/detail/hmpcdnefhhlffjlbpiakgonjogcfdpec?utm_source=item-share-cb" class="btn btn-primary" target="_blank" rel="noopener">
+                    <span style="font-size: 1.2rem;" role="img" aria-label="chrome">🌐</span>
+                    Install LEXI Extension
+                </a>
+                <a href="https://youtu.be/McZlp9-sGTI?si=GCxtXUwgH1GwTQFR" class="btn" style="background: transparent; color: white; border: 2px solid white;" target="_blank" rel="noopener">
+                    <span style="font-size: 1.2rem;" role="img" aria-label="video">🎬</span>
+                    Watch Demo Video
+                </a>
+            </div>
+            
+            <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.8;">
+                Free to use • No account required • Privacy guaranteed
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <div class="lexi-logo"></div>
+                        <span style="font-size: 1.5rem; font-weight: 700; color: var(--foreground);">LEXI</span>
+                    </div>
+                    <p style="color: var(--muted-foreground); margin: 0;">Transform your browsing experience with AI-powered text summarization.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <a href="#features">Features</a>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#benefits">Benefits</a>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Contact</h3>
+                    <div class="contact-links">
+                        <a href="https://github.com/yaksh1" target="_blank" class="contact-link">
+                            <span style="font-size: 1rem;" role="img" aria-label="github">🐙</span>
+                            /yaksh1
+                        </a>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=yakksh.dev@gmail.com&su=Contact%20from%20Lexi%20Website" class="contact-link">
+                            <span style="font-size: 1rem;" role="img" aria-label="mail">✉️</span>
+                            yakksh.dev@gmail.com
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Demo animation sequence
+        let currentDemo = 1;
+        const demoContents = [
+            {
+                text: "Artificial intelligence (AI) is intelligence demonstrated by machines, in contrast to the natural intelligence displayed by humans and animals. Leading AI textbooks define the field as the study of intelligent agents: any device that perceives its environment and takes actions that maximize its chance of successfully achieving its goals.",
+                summary: "AI refers to machine intelligence that contrasts with natural human and animal intelligence, involving computational systems that can perform tasks typically requiring human cognition.",
+                tags: ["#AI", "#Technology", "#Machine Learning"]
+            },
+            {
+                text: "Machine learning is a subset of artificial intelligence that enables computers to learn and improve from experience without being explicitly programmed. It focuses on developing algorithms that can access data and use it to learn for themselves.",
+                summary: "Machine learning enables computers to learn from experience without explicit programming, using algorithms that improve through data analysis.",
+                tags: ["#Machine Learning", "#AI", "#Algorithms"]
+            },
+            {
+                text: "Natural language processing (NLP) is a branch of artificial intelligence that helps computers understand, interpret and manipulate human language. NLP draws from many disciplines including computer science and computational linguistics.",
+                summary: "NLP is an AI branch that enables computers to understand and process human language, combining computer science and linguistics.",
+                tags: ["#NLP", "#AI", "#Linguistics"]
+            }
+        ];
+
+        function startDemoAnimation() {
+            const extensionDemo = document.getElementById('extensionDemo');
+            const resultsArea = document.getElementById('resultsArea');
+            const summaryText = document.getElementById('summaryText');
+            const summarizeBtn = document.getElementById('summarizeBtn');
+            
+            // Reset animation
+            resultsArea.style.opacity = '0';
+            resultsArea.style.transform = 'translateY(20px)';
+            
+            // Add sparkle effect to button
+            addSparkles(summarizeBtn);
+            
+            // Show loading state
+            summarizeBtn.innerHTML = `
+                <div class="loading-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                Processing...
+            `;
+            
+            // After 2 seconds, show results
+            setTimeout(() => {
+                const currentContent = demoContents[currentDemo - 1];
+                
+                // Update summary text
+                summaryText.textContent = currentContent.summary;
+                summaryText.style.width = '0';
+                summaryText.style.animation = 'typing 2s steps(40, end) forwards';
+                
+                // Update tags
+                const tagsContainer = resultsArea.querySelector('.tags-container');
+                tagsContainer.innerHTML = currentContent.tags.map(tag => 
+                    `<span class="tag">${tag}</span>`
+                ).join('');
+                
+                // Show results
+                resultsArea.style.animation = 'resultsSlideIn 0.8s ease-out forwards';
+                
+                // Reset button
+                setTimeout(() => {
+                    summarizeBtn.innerHTML = `
+                        <div class="button-glow"></div>
+                        <span style="font-size: 1rem;" role="img" aria-label="sparkles">✨</span>
+                        Summarize Selected Text
+                    `;
+                }, 1000);
+                
+            }, 2000);
+            
+            // Cycle to next demo after 8 seconds
+            setTimeout(() => {
+                currentDemo = (currentDemo % 3) + 1;
+                extensionDemo.className = `extension-panel demo-content-${currentDemo}`;
+                startDemoAnimation();
+            }, 8000);
+        }
+
+        function addSparkles(element) {
+            for (let i = 0; i < 5; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 0.5 + 's';
+                element.appendChild(sparkle);
+                
+                setTimeout(() => sparkle.remove(), 1000);
+            }
+        }
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for scroll animations
+        document.querySelectorAll('.fade-in, .slide-up').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Start the demo animation after page load
+        setTimeout(startDemoAnimation, 2000);
+
+        // Add hover effects to feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-5px)';
+                card.style.boxShadow = 'var(--shadow-lg)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+                card.style.boxShadow = 'var(--shadow)';
+            });
+        });
+
+        // Add click effects to buttons
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'scale(0.95)';
+            });
+            
+            btn.addEventListener('mouseup', () => {
+                btn.style.transform = '';
+            });
+            
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html> 
