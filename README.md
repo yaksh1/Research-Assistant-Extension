@@ -1,5 +1,6 @@
 # Research Assistant Chrome Extension
 
+[Website](https://yaksh1.github.io/Research-Assistant-Extension/)
 ## Overview
 Research Assistant is a Chrome extension that helps users summarize selected text from any webpage using an AI-powered backend, and manage personal research notes with color-coded organization.
 
